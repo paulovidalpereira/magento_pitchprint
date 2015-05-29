@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<config>
+    
+    <modules>
+        <Recurse_Pitchprint>
+            <version>1.0.0</version>
+        </Recurse_Pitchprint>
+    </modules>
+
+    <global>
+
+        <blocks>
+            <recurse_pitchprint>
+                <class>Recurse_Pitchprint_Block</class>
+            </recurse_pitchprint>
+        </blocks>
+
+        <helpers>
+            <recurse_pitchprint>
+                <class>Recurse_Pitchprint_Helper</class>
+            </recurse_pitchprint>
+        </helpers>
+        
+        <models>
+            <recurse_pitchprint>
+                <class>Recurse_Pitchprint_Model</class>
+            </recurse_pitchprint>
+        </models>
+        
+        <resources>
+            <recurse_pitchprint_setup>
+                <setup>
+                    <module>Recurse_Pitchprint</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </recurse_pitchprint_setup>
+        </resources>
+
+        <events>
+            <catalog_product_load_after>
+                <observers>
+                    <recurse_pitchprint_add_options>
+                        <type>singleton</type>
+                        <class>recurse_pitchprint/observer</class>
+                        <method>addOptions</method>
+                    </recurse_pitchprint_add_options>
+                </observers>
+            </catalog_product_load_after>
+            <sales_convert_quote_item_to_order_item>
+                <observers>
+                    <recurse_pitchprint_extra_options>
+                        <type>model</type>
+                        <class>recurse_pitchprint/observer</class>
+                        <method>salesConvertQuoteItemToOrderItem</method>
+                    </recurse_pitchprint_extra_options>
+                </observers>
+            </sales_convert_quote_item_to_order_item>
+        </events>
+
+    </global>
+
+    <frontend>
+
+        <layout>
+            <updates>
+                <recurse_pitchprint>
+                    <file>recurse_pitchprint.xml</file>
+                </recurse_pitchprint>
+            </updates>
+        </layout>
+        
+        <routers>
+           <recurse_pitchprint>
+               <use>standard</use>
+               <args>
+                   <module>Recurse_Pitchprint</module>
+                   <frontName>pitchprint</frontName>
+               </args>
+           </recurse_pitchprint>
+        </routers>
+
+    </frontend>
+
+    <default>
+
+        <catalog>
+            
+            <recurse_pitchprint_config>
+
+                <active>0</active>
+                <apikey></apikey>
+                <securitykey></securitykey>
+                <template>0</template>
+                <appurl>https://pitchprint.net/app/</appurl>
+                <apiurl>https://pitchprint.net/runtime/</apiurl>
+
+            </recurse_pitchprint_config>
+
+        </catalog>
+
+    </default>
+
+</config>

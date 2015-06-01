@@ -1,7 +1,6 @@
 <?php   
 class Recurse_Pitchprint_Block_Js extends Mage_Core_Block_Abstract
 {   
-
     public function _prepareLayout()
     {
         $product = Mage::registry('current_product');

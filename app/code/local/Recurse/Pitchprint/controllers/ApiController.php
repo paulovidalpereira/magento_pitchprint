@@ -33,36 +33,20 @@ class Recurse_Pitchprint_ApiController extends Mage_Core_Controller_Front_Action
     {
         $projectid = $this->getRequest()->getParam('projectid');
 
-        $url = $this->_helper->getApiUrl('fetch-pdf');
+        $url = $this->_helper->getApiUrl('fetch-pdf/'.$projectid);
 
         $data_string = array(
-            'timestamp' => time(),
-            'apiKey'    => $this->_helper->getApiKey(),
             'signature' => $this->_helper->getSignature(),
-            'projectID' => $projectid
+            'apiKey'    => $this->_helper->getApiKey(),
+            'timestamp' => time()
         );
 
         $query = http_build_query($data_string);
 
-        echo $redirect = $url.'?'.$query;
+        $redirect = $url.'?'.$query;
 
-        header('location '.$redirect);
+        header('location:'.$redirect);
         exit();
-
-        // $data_string = json_encode(array('designid' => '481958f0c643a02739b38a07efa8840f'));
-        // $ch = curl_init($url);                                                                      
-        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  
-        // curl_setopt($ch, CURLOPT_TIMEOUT,30);                                                                    
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-        //     'Content-Type: application/json',                                                                                
-        //     'Content-Length: ' . strlen($data_string))                                                                       
-        // );                                                                                                                   
-         
-        // echo $result = curl_exec($ch);
-
-        // var_dump($result);
     }
 
 }

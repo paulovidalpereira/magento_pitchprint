@@ -1,20 +1,17 @@
 <?php
-
 class Recurse_Pitchprint_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const CATALOG_RECURSE_PITCHPRINT_APIKEY         = 'catalog/recurse_pitchprint_config/apikey';
     const CATALOG_RECURSE_PITCHPRINT_SECURITYKEY    = 'catalog/recurse_pitchprint_config/securitykey';
     const CATALOG_RECURSE_PITCHPRINT_APPURL         = 'catalog/recurse_pitchprint_config/appurl';
     const CATALOG_RECURSE_PITCHPRINT_APIURL         = 'catalog/recurse_pitchprint_config/apiurl';
-
-    // private $_app_url = 'https://pitchprint.net/app/';
-    // private $_api_url = 'https://pitchprint.net/runtime/';
-    // private $_api_key = '572746a6e34757bbfce97d0846659763';
-    // private $_security_key = 'Jgb0e%Vno77)yg)HSxR8]UzO0ZAivt';
+    const CATALOG_RECURSE_PITCHPRINT_BTNTITULO      = 'catalog/recurse_pitchprint_config/btntitulo';
+    const CATALOG_RECURSE_PITCHPRINT_LANGUAGE       = 'catalog/recurse_pitchprint_config/language';
+    const CATALOG_RECURSE_PITCHPRINT_JQUERY         = 'catalog/recurse_pitchprint_config/jquery';
     
     public function getSignature()
     {
-        return md5($this->_api_key . $this->_security_key . time());
+        return md5($this->getApiKey() . $this->getSecurityKey() . time());
     }
 
     public function getAppUrl()
@@ -24,7 +21,7 @@ class Recurse_Pitchprint_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getApiUrl($method = '')
     {
-        return Mage::getStoreConfig(self::CATALOG_RECURSE_PITCHPRINT_APIURL).'/'.$method;
+        return Mage::getStoreConfig(self::CATALOG_RECURSE_PITCHPRINT_APIURL).$method;
     }
 
     public function getApiKey()
@@ -35,6 +32,21 @@ class Recurse_Pitchprint_Helper_Data extends Mage_Core_Helper_Abstract
     public function getSecurityKey()
     {
         return Mage::getStoreConfig(self::CATALOG_RECURSE_PITCHPRINT_SECURITYKEY);
+    }
+
+    public function getBtntitulo()
+    {
+        return Mage::getStoreConfig(self::CATALOG_RECURSE_PITCHPRINT_BTNTITULO);
+    }
+
+    public function getLanguage()
+    {
+        return Mage::getStoreConfig(self::CATALOG_RECURSE_PITCHPRINT_LANGUAGE);
+    }
+
+    public function getJquery()
+    {
+        return Mage::getStoreConfig(self::CATALOG_RECURSE_PITCHPRINT_JQUERY);
     }
 
 }

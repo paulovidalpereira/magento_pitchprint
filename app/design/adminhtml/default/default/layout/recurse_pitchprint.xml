@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<layout>
+    
+    <adminhtml_sales_order_view>
+        
+        <reference name="order_items">
+            <action method="addColumnRender"><column>name</column><block>adminhtml/sales_items_column_name</block><template>recurse/pitchprint/sales/items/column/name.phtml</template></action>
+        </reference>
+
+    </adminhtml_sales_order_view>
+
+</layout>

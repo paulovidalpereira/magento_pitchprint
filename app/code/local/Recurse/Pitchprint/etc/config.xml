@@ -10,9 +10,17 @@
     <global>
 
         <blocks>
+            
             <recurse_pitchprint>
                 <class>Recurse_Pitchprint_Block</class>
             </recurse_pitchprint>
+
+            <!-- <adminhtml>
+                <rewrite>
+                    <sales_items_column_name>Recurse_Pitchprint_Block_Adminhtml_Sales_Items_Column_Name</sales_items_column_name>
+                </rewrite>
+            </adminhtml> -->
+
         </blocks>
 
         <helpers>
@@ -83,6 +91,16 @@
 
     </frontend>
 
+    <adminhtml>
+        <layout>
+            <updates>
+                <recurse_pitchprint>
+                    <file>recurse_pitchprint.xml</file>
+                </recurse_pitchprint>
+            </updates>
+        </layout>
+    </adminhtml>
+
     <default>
 
         <catalog>
@@ -93,6 +111,9 @@
                 <apikey></apikey>
                 <securitykey></securitykey>
                 <template>0</template>
+                <btntitulo>Customizar Produto</btntitulo>
+                <language>pt-BR</language>
+                <jquery>0</jquery>
                 <appurl>https://pitchprint.net/app/</appurl>
                 <apiurl>https://pitchprint.net/runtime/</apiurl>
 

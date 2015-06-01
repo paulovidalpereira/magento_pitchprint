@@ -5,54 +5,72 @@
     
     <?php if( $_product->getData('pitchprint_enable') ): ?>
         <div>
-            <button type="button" id="customize_now_button">customize</button>
+            <button type="button" class="button btn-pitchprint"><span><?php echo Mage::helper("recurse_pitchprint")->getBtntitulo(); ?></span></button>
         </div>
     <?php endif; ?>
 
     <div class="add-to-cart">
 
-        <?php if(!$_product->isGrouped()): ?>
+        <?php if( ! $_product->isGrouped() && false ): ?>
             <label for="qty"><?php echo $this->__('Qty:') ?></label>
             <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
         <?php endif; ?>
         
-        <button type="button" title="<?php echo $buttonTitle ?>" id="product-addtocart-button" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+        <button type="button" title="<?php echo $buttonTitle ?>" id="product-addtocart-button" class="button btn-cart"><span><span><?php echo $buttonTitle ?></span></span></button>
         
         <?php echo $this->getChildHtml('', true, true) ?>
 
     </div>
-
+    
+    <?php if( Mage::helper("recurse_pitchprint")->getJquery() ): ?>
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//dta8vnpq1ae34.cloudfront.net/javascripts/jquery-ui-1.10.4.custom.min.js"></script>
+    <?php endif; ?>
     <script src="//dta8vnpq1ae34.cloudfront.net/javascripts/pitchprint.min.js"></script>
 
     <script>
         var designer;
+        var proceguir = 0;
 
         jQuery.noConflict();
 
-        jQuery(document).ready(function () {
+        jQuery(document).ready(function(){
+
             initializeEditor();
+
+            jQuery('#product-addtocart-button').on('click',function(){
+
+                console.log(proceguir);
+
+                if( proceguir == 1 ){
+                    addtocartfnc();
+                }else
+                {
+                    alert('Você precisa customizar o seu produto antes de coloca-lo no carrinho.');
+                }
+                
+            });
+
         });
 
         function initializeEditor() {
-            //dim out the customize now button till the designer is ready...
-            jQuery("#customize_now_button").css('opacity', 0.2);
+
+            jQuery(".btn-pitchprint").css('opacity', 0.2);
 
             designer = new WEB2PRINT.designer({
                 apiKey: '<?php echo Mage::helper("recurse_pitchprint")->getApiKey(); ?>',
                 globalUrlPrefix: '<?php echo Mage::helper("recurse_pitchprint")->getAppUrl(); ?>',
-                // designId: '<?php echo $this->getDesign(); ?>',
                 designId: '<?php echo $_product->getData("pitchprint_design"); ?>',
-                // language: 'pt-BR',
+                language: '<?php echo Mage::helper("recurse_pitchprint")->getLanguage(); ?>',
                 onReady: readyfnc,
                 onSave: savedfnc
             });
+
         }
 
         function readyfnc() {
-            jQuery("#customize_now_button").css('opacity', 1);
-            jQuery("#customize_now_button").click(function(){
+            jQuery(".btn-pitchprint").css('opacity', 1);
+            jQuery(".btn-pitchprint").click(function(){
                 designer.show();
             });
         }
@@ -62,8 +80,18 @@
             console.log($obj);
 
             jQuery('.product-image img').attr('src',$obj.previews[0]);
-            jQuery.post('<?php echo Mage::getUrl("pitchprint/cart/savedesign"); ?>', { projectid: $obj.projectid, preview_1: $obj.previews[0], preview_2: $obj.previews[1] });
+
+            jQuery.post('<?php echo Mage::getUrl("pitchprint/cart/savedesign"); ?>', { projectid: $obj.projectid, preview_1: $obj.previews[0], preview_2: $obj.previews[1] },function(){
+
+                proceguir = 1;
+
+            });
         }
+
+        function addtocartfnc() {
+            productAddToCartForm.submit(this);
+        }
+
     </script>
 
 <?php endif; ?>
